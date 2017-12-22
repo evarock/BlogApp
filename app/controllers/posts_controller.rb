@@ -6,29 +6,13 @@ class PostsController < ApplicationController
     @post = Post.new
   end
 
-  # GET /posts/1/edit
-  def edit
-    @post=Post.find(params[:id])
-  end
-
   # POST /posts
   # POST /posts.json
   def create
     @blog=Blog.find(params[:blog_id])
     @post=@blog.posts.build(post_params)
     @post.save
-    redirect_to blog_url(@blog)
-  end
-
-  # PATCH/PUT /posts/1
-  # PATCH/PUT /posts/1.json
-  def update
-    @post = Post.find(params[:id])
-    if @post.update_attributes(post_params)
-      redirect_to @post.user
-    else
-      render 'edit'
-    end
+    redirect_to blog_path(@blog)
   end
 
   # DELETE /posts/1
@@ -37,7 +21,7 @@ class PostsController < ApplicationController
     @blog=Blog.find(params[:blog_id])
     @post=@blog.posts.find(params[:id])
     @post.destroy
-    redirect_to blog_url(@blog)
+    redirect_to blog_path(@blog)
   end
 
   private

@@ -31,6 +31,10 @@
     <%= form.password_field :password_confirmation, id: :user_password_confirmation %>
   </div>
 
+  <% if current_user && current_user.admin? && !@user.admin? %>
+    <p><%= link_to 'Make admin', @user, method: :make_admin %></p>
+  <% end %>
+
   <div class="actions">
     <%= form.submit %>
   </div>

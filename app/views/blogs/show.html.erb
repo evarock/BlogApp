@@ -1,19 +1,53 @@
 <p id="notice"><%= notice %></p>
 
 <p>
+  <strong>Author:</strong>
+  <%= @blog.user.name %>
+</p>
+
+<p>
   <strong>Title:</strong>
   <%= @blog.title %>
 </p>
 
 <p>
   <strong>Description:</strong>
-  <%= @blog.description %>
+  <% if @blog.description.nil? %>
+    no description
+  <% else %>
+    <%= @blog.description %>
+  <% end %>
 </p>
 
+<% if current_user==@blog.user %>
+  <p>Add a post:</p>
+    <%= render 'posts/form' %>
+<% end %>
 <p>
-  <strong>User:</strong>
-  <%= @blog.user_id %>
+  <strong>Posts:</strong>
+  <% if @blog.posts.empty? %>
+    no posts
+  <% else %>
+    <table>
+      <tbody>
+        <% @blog.posts.each do |post| %>
+          <tr>
+             <td><%= post.body %></td>
+             <td><% if (current_user && current_user.admin? && !@blog.user.admin?) || current_user == @blog.user %>
+               <%= link_to 'Delete post', [@blog, post], method: :delete, data: { confirm: 'Are you sure?' } %>
+             <% end %></td>
+          </tr>
+        <% end %>
+      </tbody>
+    <table>
+  <% end %>
 </p>
 
-<%= link_to 'Edit', edit_blog_path(@blog) %> |
+<br>
+<% if (current_user && current_user.admin? && !@blog.user.admin?) || current_user == @blog.user %>
+  <%= link_to 'Edit blog', edit_blog_path(@blog) %>
+<% end %>
+<% if (current_user && current_user.admin? && !@blog.user.admin?) || current_user == @blog.user %>
+  <%= link_to 'Delete blog', @blog, method: :delete, data: { confirm: 'Are you sure?' } %>
+<% end %>
 <%= link_to 'Back', blogs_path %>

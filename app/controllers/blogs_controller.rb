@@ -27,7 +27,8 @@ class BlogsController < ApplicationController
   # POST /blogs
   # POST /blogs.json
   def create
-    @blog = current_user.blog.new(blog_params)
+    @blog = Blog.new(blog_params)
+    @blog.user_id = current_user.id
     if @blog.save
       redirect_to @blog
     else
@@ -51,7 +52,7 @@ class BlogsController < ApplicationController
   def destroy
     @blog=Blog.find(params[:id])
     @blog.destroy
-    redirect_to users_url 
+    redirect_to blogs_path
   end
 
   private
