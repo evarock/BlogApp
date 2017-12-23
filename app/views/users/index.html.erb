@@ -2,20 +2,20 @@
 
 <h1>Users</h1>
 
-<table>
-  <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th>Role</th>
-      <th>Blog</th>
+<table class="table table-striped table-dark">
+  <thead class="thead-dark">
+    <tr class="table-dark">
+      <th scope="col">Name</th>
+      <th scope="col">Email</th>
+      <th scope="col">Role</th>
+      <th scope="col">Blog</th>
       <th colspan="4"></th>
     </tr>
   </thead>
 
   <tbody>
     <% @users.each do |user| %>
-      <tr>
+      <tr  class="table-dark">
         <td><%= user.name %></td>
         <td><%= user.email %></td>
         <td><% if user.admin? %>

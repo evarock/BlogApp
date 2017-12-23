@@ -4,7 +4,7 @@ Rails.application.routes.draw do
   resources :users
 
   resources :blogs do
-    resources :posts
+    resources :posts, only: [ :create, :destroy ]
   end
 
   match '/users/:id', to: 'users#make_admin' , via: 'post'

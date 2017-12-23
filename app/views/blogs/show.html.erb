@@ -25,21 +25,20 @@
 <% end %>
 <p>
   <strong>Posts:</strong>
-  <% if @blog.posts.empty? %>
+  <% if @posts.empty? %>
     no posts
   <% else %>
-    <table>
-      <tbody>
-        <% @blog.posts.each do |post| %>
-          <tr>
-             <td><%= post.body %></td>
-             <td><% if (current_user && current_user.admin? && !@blog.user.admin?) || current_user == @blog.user %>
-               <%= link_to 'Delete post', [@blog, post], method: :delete, data: { confirm: 'Are you sure?' } %>
-             <% end %></td>
-          </tr>
-        <% end %>
-      </tbody>
-    <table>
+  <%= @posts.inspect %>
+    <% @posts.each do |post| %>
+      <div class="card text-center" style="width: 100rem;">
+        <div class="card-body">
+          <div class="card-text"><%= post.body %></div>
+          <% if (current_user && current_user.admin? && !@blog.user.admin?) || current_user == @blog.user %>
+             <%= link_to 'Delete post', [@blog, post], method: :delete, data: { confirm: 'Are you sure?' }, class:"card-link" %>
+           <% end %>
+        </div>
+      </div>
+    <% end %>
   <% end %>
 </p>
 
