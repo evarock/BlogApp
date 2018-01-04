@@ -1,51 +1,57 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Author:</strong>
-  <%= @blog.user.name %>
-</p>
+<div class="main-info">
+  <p class="p-right">
+    <strong>Author:</strong>
+    <%= @blog.user.name %>
+  </p>
 
-<p>
-  <strong>Title:</strong>
-  <%= @blog.title %>
-</p>
+  <p class="p-right">
+    <strong>Title:</strong>
+    <%= @blog.title %>
+  </p>
 
-<p>
-  <strong>Description:</strong>
-  <% if @blog.description.nil? %>
-    no description
-  <% else %>
-    <%= @blog.description %>
-  <% end %>
-</p>
-
-<% if current_user==@blog.user %>
-  <p>Add a post:</p>
-    <%= render 'posts/form' %>
-<% end %>
-<p>
-  <strong>Posts:</strong>
-  <% if @posts.empty? %>
-    no posts
-  <% else %>
-    <% @posts.each do |post| %>
-      <div class="card text-center" style="width: 100rem;">
-        <div class="card-body">
-          <div class="card-text"><%= post.body %></div>
-          <% if (current_user && current_user.admin? && !@blog.user.admin?) || current_user == @blog.user %>
-             <%= link_to 'Delete post', [@blog, post], method: :delete, data: { confirm: 'Are you sure?' }, class:"card-link" %>
-           <% end %>
-        </div>
-      </div>
+  <p class="p-right">
+    <strong>Description:</strong>
+    <% if @blog.description.nil? %>
+      no description
+    <% else %>
+      <%= @blog.description %>
     <% end %>
+  </p>
+
+  <br>
+
+  <% if current_user==@blog.user %>
+    <p><strong>Add a post:</strong></p>
+      <%= render 'posts/form' %>
   <% end %>
-</p>
+
+  <br>
+
+  <p><strong>Posts:</strong></p>
+    <% if @posts.empty? %>
+      <p>no posts</p>
+    <% else %>
+      <% @posts.each do |post| %>
+        <div class="card text-center" style="border: 1px solid black; margin-bottom: 5px;">
+          <div class="card-body">
+            <div class="card-text"><%= post.body %></div>
+            <% if (current_user && current_user.admin? && !@blog.user.admin?) || current_user == @blog.user %>
+               <%= link_to 'Delete post', [@blog, post], method: :delete, data: { confirm: 'Are you sure?' }, class:"card-link" %>
+             <% end %>
+          </div>
+        </div>
+      <% end %>
+    <% end %>
+</div>
 
 <br>
-<% if (current_user && current_user.admin? && !@blog.user.admin?) || current_user == @blog.user %>
-  <%= link_to 'Edit blog', edit_blog_path(@blog) %>
-<% end %>
-<% if (current_user && current_user.admin? && !@blog.user.admin?) || current_user == @blog.user %>
-  <%= link_to 'Delete blog', @blog, method: :delete, data: { confirm: 'Are you sure?' } %>
-<% end %>
-<%= link_to 'Back', blogs_path %>
+
+<div class="shared-links">
+  <% if (current_user && current_user.admin? && !@blog.user.admin?) || current_user == @blog.user %>
+    <%= link_to 'Edit blog', edit_blog_path(@blog) %> |
+    <%= link_to 'Delete blog', @blog, method: :delete, data: { confirm: 'Are you sure?' } %> |
+  <% end %>
+  <%= link_to 'Back', blogs_path %>
+</div>
